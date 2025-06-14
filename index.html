@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nuestra Historia</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      background: #ffeff5;
+    }
+
+    .inicio {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(#ffb6c1, #ffe4e1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      animation: fadeIn 2s ease;
+    }
+
+    .inicio h1 {
+      font-size: 2.5em;
+      color: #b30059;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .inicio button {
+      background-color: #ff4d88;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1em;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .inicio button:hover {
+      background-color: #e60073;
+    }
+
+    .galeria {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: none;
+    }
+
+    .imagen-container {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, #ffe6f0, #ffffff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+      position: relative;
+      animation: fadeIn 1s ease;
+    }
+
+    .imagen-container img {
+      max-height: 80vh;
+      max-width: 90vw;
+      object-fit: contain;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      transition: opacity 0.5s ease;
+    }
+
+    .frase {
+      margin-top: 20px;
+      font-size: 1.3em;
+      color: #cc0066;
+      text-align: center;
+    }
+
+    .boton-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.8);
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.5em;
+      color: #cc0066;
+    }
+
+    .boton-nav:hover {
+      background-color: #ffb3cc;
+    }
+
+    .anterior { left: 20px; }
+    .siguiente { right: 20px; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Lluvia de corazones */
+    .corazon {
+      position: fixed;
+      top: -10px;
+      font-size: 20px;
+      color: #ff4d88;
+      animation: caer 5s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes caer {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Carta de amor */
+    #mostrarCarta {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      background: #ff4d88;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 1em;
+      cursor: pointer;
+      z-index: 10;
+      transition: background-color 0.3s ease;
+    }
+
+    #mostrarCarta:hover {
+      background-color: #e60073;
+    }
+
+    #carta {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      background: white;
+      color: #660033;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 9;
+      font-size: 1em;
+      line-height: 1.6;
+      max-height: 40vh;
+      overflow-y: auto;
+      animation: fadeIn 0.5s ease;
+    }
+
+    #carta.mostrar {
+      display: block;
+    }
+
+    .cerrar-carta {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: #cc0066;
+      cursor: pointer;
+    }
+
+    .maquina {
+      border-right: 2px solid #cc0066;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: escribir 3s steps(60, end) 1;
+    }
+
+    @keyframes escribir {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    /* BOTÓN SECRETO Y MENSAJE */
+    #botonSecreto {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #ff4d88;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50%;
+      font-size: 1.5em;
+      cursor: pointer;
+      z-index: 20;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    #claveSecreta {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: white;
+      padding: 10px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 20;
+      gap: 5px;
+      flex-direction: column;
+    }
+
+    #claveSecreta input {
+      padding: 8px;
+      border: 1px solid #ff4d88;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    #claveSecreta button {
+      padding: 5px 10px;
+      background: #ff4d88;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #mensajeSecreto {
+      position: fixed;
+      top: 150px;
+      right: 20px;
+      background: #fff0f5;
+      color: #cc0066;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      display: none;
+      font-size: 1.1em;
+      max-width: 250px;
+      z-index: 20;
+    }
+
+  </style>
+</head>
+<body>
+  <audio id="musica" src="audio/musica.mp3"></audio>
+
+  <div class="inicio" id="pantallaInicio">
+    <h1>Hola mi amor 💖<br>Hoy celebramos 5 años juntos</h1>
+    <button onclick="comenzarHistoria()">Empezar</button>
+  </div>
+
+  <div class="galeria" id="galeria">
+    <button class="boton-nav anterior" onclick="cambiarImagen(-1)">❮</button>
+    <div class="imagen-container">
+      <img id="imagenActual" src="" alt="Imagen Romántica" />
+      <p class="frase" id="fraseActual"></p>
+    </div>
+    <button class="boton-nav siguiente" onclick="cambiarImagen(1)">❯</button>
+  </div>
+
+  <button id="mostrarCarta">Leer carta 💌</button>
+  <div id="carta">
+    <button class="cerrar-carta" onclick="cerrarCarta()">✖</button>
+    <p id="textoCarta" class="maquina"></p>
+  </div>
+
+  <!-- Botón secreto flotante -->
+  <button id="botonSecreto" onclick="mostrarSecreto()">❤️</button>
+
+  <!-- Entrada de clave secreta -->
+  <div id="claveSecreta">
+    <input type="text" id="claveInput" placeholder="Palabra mágica..." />
+    <button onclick="verificarClave()">Aceptar</button>
+  </div>
+
+  <!-- Mensaje secreto -->
+  <div id="mensajeSecreto" class="maquina">Te amo para toda la vida 💖</div>
+
+  <script>
+    const imagenes = [
+      "images/foto1.jpg",
+      "images/foto2.jpg",
+      "images/foto3.jpg",
+      "images/foto4.jpg",
+      "images/foto5.jpg",
+      "images/foto6.jpg",
+      "images/foto7.jpg",
+      "images/foto8.jpg",
+      "images/foto9.jpg",
+      "images/foto10.jpg"
+    ];
+
+    const frases = [
+      "Nuestro primer instante juntos...",
+      "Tu risa es mi canción favorita",
+      "A tu lado, el mundo es perfecto",
+      "Cada mirada tuya vale más que mil palabras",
+      "Gracias por estos 5 años de amor",
+      "No hay día que no piense en ti",
+      "Eres mi paz, mi alegría, mi todo",
+      "Contigo cada día es especial",
+      "Te amo más de lo que imaginas",
+      "Y esto apenas comienza... 💖"
+    ];
+
+    const cartas = [
+      "Amor mío, ese fue el día en que empezó todo. Jamás lo voy a olvidar.",
+      "Cada vez que te veo sonreír, mi mundo se ilumina.",
+      "A tu lado, la vida es mucho más dulce. ¡Gracias por tanto!",
+      "Tus ojos tienen la magia de calmarme el alma.",
+      "Han sido 5 años increíbles... y lo mejor está por venir.",
+      "Cada noche doy gracias por tenerte conmigo.",
+      "Sos mi hogar, mi refugio, mi paz. Te amo profundamente.",
+      "Quiero seguir compartiendo mil aventuras con vos.",
+      "No hay palabras suficientes para explicar cuánto te amo.",
+      "Hoy, mañana y siempre, quiero estar a tu lado 💖"
+    ];
+
+    let indice = 0;
+
+    function comenzarHistoria() {
+      document.getElementById("pantallaInicio").style.display = "none";
+      document.getElementById("galeria").style.display = "block";
+      document.getElementById("musica").play();
+      mostrarImagen();
+      iniciarLluviaCorazones();
+    }
+
+    function mostrarImagen() {
+      const img = document.getElementById("imagenActual");
+      img.style.opacity = 0;
+      setTimeout(() => {
+        img.src = imagenes[indice];
+        document.getElementById("fraseActual").textContent = frases[indice];
+        document.getElementById("textoCarta").classList.remove("maquina");
+        document.getElementById("textoCarta").textContent = "";
+        escribirCarta(cartas[indice]);
+        img.style.opacity = 1;
+      }, 300);
+    }
+
+    function cambiarImagen(direccion) {
+      indice += direccion;
+      if (indice < 0) indice = imagenes.length - 1;
+      if (indice >= imagenes.length) indice = 0;
+      mostrarImagen();
+      document.getElementById("carta").classList.remove("mostrar");
+    }
+
+    function iniciarLluviaCorazones() {
+      setInterval(() => {
+        const corazon = document.createElement("div");
+        corazon.classList.add("corazon");
+        corazon.style.left = Math.random() * window.innerWidth + "px";
+        corazon.style.fontSize = (10 + Math.random() * 20) + "px";
+        corazon.style.animationDuration = (3 + Math.random() * 3) + "s";
+        corazon.textContent = "❤️";
+        document.body.appendChild(corazon);
+        setTimeout(() => {
+          corazon.remove();
+        }, 6000);
+      }, 400);
+    }
+
+    // Carta de amor
+    document.getElementById("mostrarCarta").addEventListener("click", () => {
+      document.getElementById("carta").classList.toggle("mostrar");
+    });
+
+    function cerrarCarta() {
+      document.getElementById("carta").classList.remove("mostrar");
+    }
+
+    function escribirCarta(texto) {
+      const elem = document.getElementById("textoCarta");
+      elem.textContent = "";
+      elem.classList.add("maquina");
+      let i = 0;
+      function escribir() {
+        if (i < texto.length) {
+          elem.textContent += texto.charAt(i);
+          i++;
+          setTimeout(escribir, 50);
+        } else {
+          elem.classList.remove("maquina");
+        }
+      }
+      escribir();
+    }
+
+    // Botón secreto y mensaje secreto
+    function mostrarSecreto() {
+      document.getElementById("claveSecreta").style.display = "flex";
+      document.getElementById("claveInput").focus();
+    }
+
+    function verificarClave() {
+      const input = document.getElementById("claveInput").value.toLowerCase().trim();
+      if (input === "chubby") {
+        const mensaje = document.getElementById("mensajeSecreto");
+        mensaje.style.display = "block";
+        mensaje.classList.remove("maquina");
+        mensaje.textContent = "";
+        let texto = "Te amo para toda la vida 💖";
+        let i = 0;
+        function escribir() {
+          if (i < texto.length) {
+            mensaje.textContent += texto.charAt(i);
+            i++;
+            setTimeout(escribir, 50);
+          }
+        }
+        escribir();
+      } else {
+        alert("Ups, esa no es la palabra secreta 😳");
+      }
+    }
+
+  </script>
+</body>
+</html>
